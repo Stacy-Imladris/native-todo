@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         lineHeight: 24,
         color: '#ffffff',
-        marginLeft: 20,
+        marginLeft: 15,
     },
     input: {
-        marginLeft: 20,
+        marginLeft: 15,
         width: 150,
         height: 36,
         backgroundColor: 'white',

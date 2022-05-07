@@ -29,8 +29,13 @@ export function Main() {
     const animatedValue = useRef(new Animated.Value(0)).current
     const translateY = animatedValue.interpolate({
         inputRange: [0, 1],
-        outputRange: [0, -100],
+        outputRange: [0, -80],
     })
+
+    const onSeparatorPress = () => {
+        setShow(!show)
+        startAnimate(show)
+    }
 
     const startAnimate = (show: boolean) => {
         if (show) {
@@ -74,9 +79,11 @@ export function Main() {
 
     const renderItem: ListRenderItem<TaskType> = ({item}) => (
         <View style={styles.row}>
-            <Checkbox onValueChange={(value) => changeIsDone(item.id, value)}
-                      value={item.isDone}/>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
+            <Pressable style={{width: 40, height: 40, padding: 10}}
+                       onPress={() => changeIsDone(item.id, !item.isDone)}>
+                <Checkbox value={item.isDone}/>
+            </Pressable>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '90%'}}>
                 <SuperText title={item.title} id={item.id} changeTitle={changeTitle}/>
                 <TouchableOpacity onPress={() => deleteTask(item.id)}>
                     <View><Text style={styles.text}>X</Text></View>
@@ -94,10 +101,7 @@ export function Main() {
             </View>
         </View>
         <Animated.View style={{...styles.containerAbsolute, bottom: -80, transform: [{translateY}]}}>
-            <Pressable style={{height: 40, alignItems: 'center', marginTop: 10}} onPress={() => {
-                setShow(!show)
-                startAnimate(show)
-            }}>
+            <Pressable style={styles.separatorBox} onPress={onSeparatorPress}>
                 <Text style={styles.separator}/>
             </Pressable>
             <View style={styles.inputBox}>
@@ -139,6 +143,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#c2c6d2',
         width: '100%',
+    },
+    separatorBox: {
+        height: 40,
+        alignItems: 'center',
+        marginTop: 10,
     },
     separator: {
         width: 100,

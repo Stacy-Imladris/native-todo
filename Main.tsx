@@ -1,6 +1,6 @@
 import {StatusBar} from 'expo-status-bar';
 import {
-    Animated, FlatList, Keyboard, ListRenderItem,
+    Animated, FlatList, Keyboard, ListRenderItem, Pressable,
     StyleSheet,
     Text,
     TextInput,
@@ -74,7 +74,8 @@ export function Main() {
 
     const renderItem: ListRenderItem<TaskType> = ({item}) => (
         <View style={styles.row}>
-            <Checkbox value={item.isDone} onValueChange={(value) => changeIsDone(item.id, value)}/>
+            <Checkbox onValueChange={(value) => changeIsDone(item.id, value)}
+                      value={item.isDone}/>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
                 <SuperText title={item.title} id={item.id} changeTitle={changeTitle}/>
                 <TouchableOpacity onPress={() => deleteTask(item.id)}>
@@ -93,12 +94,12 @@ export function Main() {
             </View>
         </View>
         <Animated.View style={{...styles.containerAbsolute, bottom: -80, transform: [{translateY}]}}>
-            <View style={{height: 40, alignItems: 'center', marginTop: 10}}>
-                <Text style={styles.separator} onPress={() => {
-                    setShow(!show)
-                    startAnimate(show)
-                }}/>
-            </View>
+            <Pressable style={{height: 40, alignItems: 'center', marginTop: 10}} onPress={() => {
+                setShow(!show)
+                startAnimate(show)
+            }}>
+                <Text style={styles.separator}/>
+            </Pressable>
             <View style={styles.inputBox}>
                 <TextInput style={styles.input} value={title} onChangeText={setTitle}/>
                 <TouchableOpacity onPress={addTask}>
